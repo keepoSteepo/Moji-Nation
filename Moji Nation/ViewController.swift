@@ -12,7 +12,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
     @IBOutlet weak var miraMesa: UITableView!
     
-    var Moji = ["🧐", "🤫", "😑", "🤖", "👁"]
+    var Mojis = ["🧐", "🤫", "😑", "🤖", "👁"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +24,26 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Moji.count
+        return Mojis.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         print(indexPath.row)
         let cell = UITableViewCell()
-        cell.textLabel?.text = Moji[indexPath.row]
+        cell.textLabel?.text = Mojis[indexPath.row]
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let Moji = Mojis[indexPath.row]
+        performSegue(withIdentifier: "moveSegue", sender: Moji)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let defVC = segue.destination as! DefinitionViewController
+        defVC.Moji = sender as! String
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
